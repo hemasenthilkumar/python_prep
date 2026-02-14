@@ -56,6 +56,12 @@ class TestMathUtils(unittest.TestCase):
     def test_power(self):
         self.assertEqual(self.mutils.power(2,3), 8)
 
+    # Subtest for sending multiple values
+    def test_multiple_values_power(self):
+        for number in [2,4,5,6,7,8]:
+            with self.subTest(number=number):
+                self.assertEqual(self.mutils.power(number, 2), number**2)
+
 
 class TestStringUtils(unittest.TestCase):
 
@@ -93,6 +99,7 @@ def create_and_run_suite():
     ]
     math_suite.addTests(math_tests)
     math_suite.addTest(TestMathUtils("test_power"))
+    math_suite.addTest(TestMathUtils("test_multiple_values_power"))
 
     loader = unittest.TestLoader()
     string_suite = loader.loadTestsFromTestCase(TestStringUtils)
