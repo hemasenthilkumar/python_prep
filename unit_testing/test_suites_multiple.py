@@ -66,11 +66,11 @@ class TestMathUtils(unittest.TestCase):
 class TestStringUtils(unittest.TestCase):
 
     @classmethod
-    def setUp(cls):
+    def setUpClass(cls):
         cls.sutils = StringUtils()
     
     @classmethod
-    def tearDown(cls):
+    def tearDownClass(cls):
         del cls.sutils 
 
     def test_string_join(self):
