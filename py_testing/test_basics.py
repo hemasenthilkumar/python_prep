@@ -34,3 +34,27 @@ Test edge case: discount = 1
 
 Test zero tax rate
 """
+from pytest import approx, raises, fixture
+from pricing import PriceCalculator
+
+@fixture
+def init_pc():
+    pc = PriceCalculator(tax_rate=0.1)
+    return pc
+
+def test_correct_final_price(init_pc):
+    assert init_pc.final_price(40) == 44 
+
+def test_correct_final_price_discount(init_pc):
+    assert approx(init_pc.final_price(40, 0.15) )== 37.4
+
+def test_invalid_base_price(init_pc):
+    with raises(ValueError):
+        init_pc.final_price(-1)
+
+def test_invalid_discount_price(init_pc):
+    with raises(ValueError):
+        init_pc.final_price(400, 1.5)
+
+def test_full_discount(init_pc):
+    assert init_pc.final_price(400,1) == 0
