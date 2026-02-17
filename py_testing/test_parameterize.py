@@ -35,3 +35,21 @@ Parametrize fixture
 
 Use indirect parametrization
 """
+import pytest
+from access_control import can_access
+
+@pytest.mark.parametrize("role, is_active, has_subscription, expected", [
+    ("admin", True, False, True),
+    ("admin", False, False, False),
+    ("user", True, True, True),
+    ("user", True, False, False),
+    ("user", False, False, False),
+    ("guest", True, False, False)
+
+], 
+ids=[
+    "admin_active", "admin_inactive", "user_active_subscription", "user_active_no_subscription",
+    "user_inactive", "guest_active"
+])
+def test_can_access(role, is_active, has_subscription, expected):
+    assert can_access(role, is_active, has_subscription) == expected
